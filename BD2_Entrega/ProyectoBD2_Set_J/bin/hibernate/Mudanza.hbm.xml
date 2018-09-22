@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="modelo">
+<class name="Mudanza" table="mudanza">
+	<id name="idMudanza"  column="idMudanza" >
+		<generator class="native"/>
+	</id>
+	<property name="finalizada"/>	
+	<property name="domicilio"/>
+	<property name="valor"/>
+	<property name="horas"/>
+	<property name="fecha"/>
+	
+	<set name="empleados" cascade="save-update" table="empleados_mudanza" >
+		<key column="idMudanza"/>		
+		<many-to-many column="idRol" class="RolEmpleado"/> 
+	</set>	
+</class>
+</hibernate-mapping>

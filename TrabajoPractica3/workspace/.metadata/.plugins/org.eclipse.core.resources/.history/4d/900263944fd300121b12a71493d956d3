@@ -1,0 +1,7 @@
+#This file contains configuration properties for the database
+#Please replace database, localhost and port with your settings.
+#The values for hostname and port are optional.
+#Wed Jun 12 07:26:27 ART 2013
+javax.jdo.PersistenceManagerFactoryClass=com.versant.core.jdo.BootstrapPMF
+javax.jdo.option.ConnectionURL=versant\:UNLP
+versant.metadata.0=package.jdo

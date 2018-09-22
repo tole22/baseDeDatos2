@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="hibernate/TablaPorCadaClase">
+<class name="RolEmpleado" table="ROL_EMPLEADO">
+	<id name="id_rol"  column="ID_ROL" >
+		<generator class="native"/>
+	</id>	
+	<property name="nombreRol"/>	
+	<many-to-one name="empleado" column="CUIL_EMPLEADO" class="Empleado"/>
+	<joined-subclass name="Ayudante" table="AYUDANTE">
+		<key column="ID_ROL"/>	
+	</joined-subclass>
+	<joined-subclass name="Conductor" table="CONDUCTOR">
+		<key column="ID_ROL"/>	
+		<many-to-one name="transporte" column="PATENTE" class="Transporte"/>
+	</joined-subclass>
+	
+	
+</class>
+</hibernate-mapping>

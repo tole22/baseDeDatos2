@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">root</property>
+		<property name="connection.url">jdbc:mysql://localhost/bbdd2_set_c</property>
+		<property name="show_sql">true</property>
+		
+		<mapping resource="hibernate/Empleado.hbm.xml" />
+		<mapping resource="hibernate/EmpresaDeMudanzas.hbm.xml" />
+		<mapping resource="hibernate/Mudanza.hbm.xml" />
+		<!-- 
+		<mapping resource="hibernate/Tarifario.hbm.xml" />		  		 
+		<mapping resource="hibernate/TablaPorJerarquia/RolEmpleado.hbm.xml"/>
+		<mapping resource="hibernate/TablaPorJerarquia/Transporte.hbm.xml" />
+		-->		
+		<mapping resource="hibernate/TablaPorCadaClase/RolEmpleado.hbm.xml" />
+		<mapping resource="hibernate/TablaPorCadaClase/Transporte.hbm.xml" />
+		
+	</session-factory>
+</hibernate-configuration>

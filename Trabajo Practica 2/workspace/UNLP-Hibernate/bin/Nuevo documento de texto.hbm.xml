@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "- //Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<Clase name="Ayudante" />
+
+	<hibernate-mapping package="hibernate">
+		<class name="Ayudante" table="AYUDANTE">
+			<id name="IdPersona" column="ID_PERSONA">
+				<generator class="native"/>
+			</id>
+			<property name="nombre" not-null="true"/>
+			<property name="fechaNacimiento"/>
+		</class>
+	</hibernate-mapping>
+
+
+<Clase name="Camion" />
+
+	<hibernate-mapping package="hibernate">
+		<class name="Camion" table="CAMION">
+			<id name="IdPersona" column="ID_PERSONA">
+				<generator class="native"/>
+			</id>
+			<property name="nombre" not-null="true"/>
+			<property name="fechaNacimiento"/>
+		</class>
+	</hibernate-mapping>
+
+<Clase name="Camioneta" />
+
+	<hibernate-mapping package="hibernate">
+		<class name="Camioneta" table="CAMIONETA">
+			<id name="IdPersona" column="ID_PERSONA">
+				<generator class="native"/>
+			</id>
+			<property name="nombre" not-null="true"/>
+			<property name="fechaNacimiento"/>
+		</class>
+	</hibernate-mapping>
+
+<Clase name="Conductor" />
+
+	<hibernate-mapping package="hibernate">
+		<class name="Conductor" table="CONDUCTOR">
+			<id name="IdPersona" column="ID_PERSONA">
+				<generator class="native"/>
+			</id>
+			<property name="nombre" not-null="true"/>
+			<property name="fechaNacimiento"/>
+		</class>
+	</hibernate-mapping>
+
+<Clase name="RolEmpleado" />
+
+	<hibernate-mapping package="hibernate">
+		<class name="RolEmpleado" table="ROL_EMPLEADO">
+			<id name="IdPersona" column="ID_PERSONA">
+				<generator class="native"/>
+			</id>
+			<property name="nombre" not-null="true"/>
+			<property name="fechaNacimiento"/>
+		</class>
+	</hibernate-mapping>
+
+<Clase name="Transporte" />
+
+	<hibernate-mapping package="hibernate">
+		<class name="Transporte" table="TRANSPORTE">
+			<id name="IdPersona" column="ID_PERSONA">
+				<generator class="native"/>
+			</id>
+			<property name="nombre" not-null="true"/>
+			<property name="fechaNacimiento"/>
+		</class>
+	</hibernate-mapping>
+
+
+Listo SET
+
+	<hibernate-mapping package="hibernate">
+		<class name="Empleado" table="EMPLEADO">
+			<id name="IdEmpleado" column="ID_EMPLEADO">
+				<generator class="native" />
+			</id>
+			<property name="nombreCompleto" column="NOMBRE_COMPLETO" />
+			<property name="fechaNacimiento" column="FECHA_NACIMIENTO" />
+			<property name="cuil" culumn="CUIL" />
+			<many-to-one name="jefe" column="JEFE" cascade="all"/>
+		</class>
+	</hibernate-mapping>
+
+	<hibernate-mapping package="hibernate">
+		<class name="EmpresaDeMudanzas" table="EMPRESA_DE_MUDANZAS">
+			<id name="IdEmpresaDeMudanzas" column="ID_EMPRESA_DE_MUDANZAS">
+				<generator class="native"/>
+			</id>
+			<property name="cuit" column="CUIT"/>
+			<property name="razonSocial" column="RAZON_SOCIAL"/>
+			<set name="empleados" cascade="all">
+				<key column="ID_EMPRESA_DE_MUDANZAS" not-null="true"/>
+				<one-to-many class="Empleado"/>
+			</set>
+			<set name="realizadas" cascade="all">
+				<key column="ID_EMPRESA_DE_MUDANZAS" not-null="true"/>
+				<one-to-many class="Mudanza"/>
+			</set>
+			<set name="pendientes" cascade="all">
+				<key column="ID_EMPRESA_DE_MUDANZAS" not-null="true"/>
+				<one-to-many class="Mudanza"/>
+			</set>
+			<!-- ver si los sets anteriores estan bien -->
+			<set name="transportes" cascade="all">
+				<key column="ID_EMPRESA_DE_MUDANZAS" not-null="true"/>
+				<one-to-many class="Transporte"/>
+			</set>
+			<many-to-one name="gerente" column="ID_EMPLEADO" unique="true" not-null="true" cascade="all"/>
+		</class>
+	</hibernate-mapping>
+
+	<hibernate-mapping package="hibernate">
+		<class name="Mudanza" table="MUDANZA">
+			<id name="IdMudanza" column="ID_MUDANZA">
+				<generator class="native"/>
+			</id>
+			<property name="domicilio" column="DOMICILIO"/>
+			<property name="fecha" column="FECHA"/>
+			<property name="valor" column="VALOR"/>
+			<property name="horas" column="HORAS"/>
+			<property name="finalizada" column="FINALIZADA"/>
+			<set name="empleados" table="EMPLEADO_MUDANZA" cascade="all">
+				<key column="ID_MUDANZA" not-null="true"/>
+				<many-to-many column="ID_ROL_EMPLEADO" class="RolEmpleado"/>
+			</set>
+		</class>
+	</hibernate-mapping>
+
+	<hibernate-mapping package="hibernate">
+		<class name="Tarifario" table="TARIFARIO">
+			<id name="IdTarifario" column="ID_TARIFARIO">
+				<generator class="native"/>
+			</id></class>
+	</hibernate-mapping>
+
+	<!-- DECLARACION DE JERARQUIA A UNA SOLA TABLA -->
+
+	<hibernate-mapping package="hibernate">
+		<class name="RolEmpleado" table="ROL_EMPLEADO">
+			<id name="IdRolEmpleado" column="ID_ROL_EMPLEADO">
+				<generator class="native"/>
+			</id>
+			<property name="nombreRol" column="NOMBRE_ROL" not-null="true"/>
+			<discriminator column="TIPO_EMPLEADO" type="string"/>
+			<subclass name="Conductor" discriminator-value="CON">
+				<many-to-one name="transporte" column="ID_TRANSPORTE" not-null="true" cascade="all"/>
+			</subclass>
+			<subclass name="Ayudante" discriminator-value="AYU">
+			</subclass>
+			<many-to-one name="empleado" column="ID_EMPLEADO" not-null="true" cascade="all"/>
+		</class>
+	</hibernate-mapping>
+
+	<hibernate-mapping package="hibernate">
+		<class name="Transporte" table="TRANSPORTE">
+			<id name="IdTransporte" column="ID_TRANSPORTE">
+				<generator class="native"/>
+			</id>
+			<property name="pesoMaximo" column="PESO_MAXIMO"/>
+			<property name="patente" column="PATENTE"/>
+			<discriminator column="TIPO_TRANSPORTE" type="string"/>
+			<subclass name="Camion" discriminator-value="CAN">
+			</subclass>
+			<subclass name="Camioneta" discriminator-value="CAA">
+			</subclass>
+		</class>
+	</hibernate-mapping>
+
+	<!-- DECLARACION DE JERARQUIA CON TABLA POR SUBCLASE -->
+
+	<hibernate-mapping package="hibernate">
+		<class name="RolEmpleado" table="ROL_EMPLEADO">
+			<id name="IdRolEmpleado" column="ID_ROL_EMPLEADO">
+				<generator class="native"/>
+			</id>
+			<property name="nombreRol" column="NOMBRE_ROL" not-null="true"/>
+			<joined-subclass name="Ayudante" table="AYUDANTE">
+				<key column="ID_ROL_EMPLEADO"/>
+			</joined-subclass>
+			<joined-subclass name="Conductor" table="CONDUCTOR">
+				<key column="ID_ROL_EMPLEADO"/>
+				<many-to-one name="transporte" column="ID_TRANSPORTE" not-null="true" cascade="all"/>
+			</joined-subclass>
+			<many-to-one name="empleado" column="ID_EMPLEADO" not-null="true" cascade="all"/>
+		</class>
+	</hibernate-mapping>
+
+	<hibernate-mapping package="hibernate">
+		<class name="Transporte" table="TRANSPORTE">
+			<id name="IdTransporte" column="ID_TRANSPORTE">
+				<generator class="native"/>
+			</id>
+			<property name="pesoMaximo" column="PESO_MAXIMO"/>
+			<property name="patente" column="PATENTE"/>
+			<joined-subclass name="Camion" table="CAMION">
+				<key column="ID_TRANSPORTE"/>
+			</joined-subclass>
+			<joined-subclass name="Camioneta" table="CAMIONETA">
+				<key column="ID_TRANSPORTE"/>
+			</joined-subclass>
+		</class>
+	</hibernate-mapping>

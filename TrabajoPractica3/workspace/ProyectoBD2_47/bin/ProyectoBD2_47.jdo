@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jdo>
+    <package name="modelo">
+        <class name="Empleado" />
+        <class name="EmpresaDeMudanzas" />
+        <class name="Transporte" />
+        <class name="RolEmpleado" />
+        <class name="Mudanza" />
+        <class name="Camion" persistence-capable-superclass="Transporte" />
+        <class name="Camioneta" persistence-capable-superclass="Transporte" />
+        <class name="Conductor" persistence-capable-superclass="RolEmpleado" />
+        <class name="Ayudante" persistence-capable-superclass="RolEmpleado" />
+    </package>
+</jdo>
+

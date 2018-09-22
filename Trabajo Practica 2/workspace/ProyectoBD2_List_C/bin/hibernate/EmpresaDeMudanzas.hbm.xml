@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="modelo">
+<class name="EmpresaDeMudanzas" table="empresa_de_mudanzas">
+	<id name="idEmpresa"  column="idEmpresa" >
+		<generator class="native"/>
+	</id>
+	<property name="razonSocial"/>	
+	<many-to-one name="gerente" column="gerente" class="Empleado" unique="true" />
+	<list name="empleados" cascade="all">
+		<key column="idEmpresa"/>
+		<list-index column="ordenListado"/>
+		<one-to-many class="Empleado"/> 
+	</list>
+	<list name="transportes" cascade="all" >
+		<key column="idEmpresa"/>
+		<list-index column="ordenListado"/>
+		<one-to-many class="Transporte"/> 
+	</list>
+	<list name="realizadas"  cascade="all">
+		<key column="empresaPendientes"/>
+		<list-index column="ordenListadoPendientes"/>
+		<one-to-many class="Mudanza"/> 
+	</list>
+	<list name="pendientes" cascade="all">
+		<key column="empresaRealizadas"/>
+		<list-index column="ordenListadoRealizadas"/>
+		<one-to-many class="Mudanza"/> 
+	</list>
+</class>
+</hibernate-mapping>

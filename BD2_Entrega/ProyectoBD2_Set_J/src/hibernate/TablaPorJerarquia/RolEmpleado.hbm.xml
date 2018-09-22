@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="modelo">
+<class name="RolEmpleado" table="rol_empleado">
+	<id name="idRol"  column="idRol" >
+		<generator class="native"/>
+	</id>
+	<discriminator column="rol" type="string"/>
+	 <property name="nombreRol"/>	
+	<many-to-one name="empleado" column="idEmpleado" class="Empleado"/>
+	<subclass name="Ayudante" discriminator-value="ayudante">	</subclass>
+	<subclass name="Conductor" discriminator-value="conductor">
+		<many-to-one name="transporte" column="idTransporte" class="Transporte"/>
+	</subclass>
+	
+	
+</class>
+</hibernate-mapping>

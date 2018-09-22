@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="modelo">
+<class name="Transporte" table="transporte">
+	<id name="idTransporte"  column="idTransporte" >
+		<generator class="native"/>
+	</id>
+	<discriminator column="tipo" type="string"/>
+	<property name="patente"/>
+	<property name="pesoMaximo"/>	
+	<property name="tipoTransporte"/>
+	<subclass name="Camioneta" discriminator-value="camioneta">	</subclass>
+	<subclass name="Camion" discriminator-value="camion"> </subclass>
+	
+	
+</class>
+</hibernate-mapping>

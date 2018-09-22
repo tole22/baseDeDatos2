@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="modelo">
+<class name="Empleado" table="empleado">
+	<id name="idEmpleado"  column="idEmpleado" >
+		<generator class="native"/>
+	</id>
+	<property name="nombreCompleto"/>	
+	<property name="fechaNacimiento" />
+	<property name="cuil" />		
+	<many-to-one name="jefe" column="idJefe" class="Empleado" cascade="none"/>
+</class>
+</hibernate-mapping>

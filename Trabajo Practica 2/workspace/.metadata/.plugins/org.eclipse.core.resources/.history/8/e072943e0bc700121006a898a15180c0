@@ -1,0 +1,136 @@
+package query;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+
+import modelo.Ayudante;
+import modelo.Camion;
+import modelo.Conductor;
+import modelo.Empleado;
+import modelo.Mudanza;
+import modelo.RolEmpleado;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
+public class DBQueries {
+private static SessionFactory sessions;
+	
+	public static void main(String[] args) {
+		Configuration cfg = new Configuration();
+		cfg.configure();
+		sessions = cfg.buildSessionFactory();
+		Session session = sessions.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			
+			long start = System.nanoTime(); //Inicio del timer para medir la duraccion de la consulta
+			
+			System.out.println("--------------------------------------------------------------------");
+			
+			ejecutarConsultaA(session);
+			
+			long elapsedTime = System.nanoTime() - start;   //Calculo de la duraccion en nanosegundos
+			
+			System.out.println("Tiempo transcurrido: " + elapsedTime + " nanosegundos");
+			
+			session.flush();
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (tx != null) {
+				tx.rollback();
+			}
+			session.close();
+		}
+		session.disconnect() ;
+	}// Fin Programa principal
+	
+	//CONSULTA A
+	private static void ejecutarConsultaA(Session session) {
+		System.out.println("Obtener las mudanzas realizadas antes del 1/1/2010");
+		System.out.println("--------------------------------------------------------------------");
+		System.out.println();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Query query = session.createQuery("select m from modelo.Mudanza m where m.fecha < :fecha");
+		try {
+			query.setParameter("fecha", sdf.parse("01/01/2010"));
+			List<Mudanza> mudanzas = query.list();
+			for (Mudanza m: mudanzas) {
+				System.out.println(m);
+			}
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}//FIN CONSULTA A
+	
+	//CONSULTA B EJE 3-A
+		private static void ejecutarConsultaB(Session session) {
+			System.out.println("Persistir una mudanza para el dia 4de agosto de 2012 con 2 ayudantes");
+			System.out.println("--------------------------------------------------------------------");
+			System.out.println();
+			
+			DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
+			
+			//Se crean los empleado
+			Date d1 = dfm.parse("1980-2-9");
+			Empleado e1 = new Empleado("Federico Lopez", d1, "21-29078663-9");
+			
+			Date d2 = dfm.parse("1975-12-4");
+			Empleado e2 = new Empleado("Daniel Estevez", d2, "21-29078666-9");
+			
+			Date d3 = dfm.parse("1970-12-4");
+			Empleado e3 = new Empleado("Alberto Sanchez", d2, "21-44078663-9");
+			
+			
+			//Se crean los ayudantes
+
+			Ayudante ayudante1=new Ayudante(e1);
+			Ayudante ayudante2=new Ayudante(e2);
+			
+			//CAMION
+			Camion transporte = new Camion();
+			transporte.setPatente("ERS390");
+			transporte.setPesoMaximo(4500);
+			
+			//CONDUCTOR
+			Conductor c = new Conductor(e3, transporte);
+			
+			//EMPLEADOS MUDANZA
+			ArrayList<RolEmpleado> emple = new ArrayList<RolEmpleado>();
+			emple.add(ayudante1);
+			emple.add(ayudante2);
+			emple.add(c);
+			
+			//MUDANZA
+			
+			Date md4 = dfm.parse("2012-08-4");
+			Mudanza m = new Mudanza(emple, "", md4, 6);
+			
+			
+			System.out.println("Nueva mudanza insertada correctamente");
+			
+			
+			//Se inicia la transacción
+
+			Transaction tx=session.beginTransaction();
+
+			//Se persiste el objeto
+			session.save(m);
+			//Se cierra la transaccion
+			tx.commit();
+		}//FIN CONSULTA A
+}//Fin de la Clase

@@ -1,0 +1,14 @@
+version=8.0.2.16.1351
+# Workbench properties (Not used at run-time)
+versant.workbench.srcPath=src/
+versant.workbench.classpath.0=src/
+versant.workbench.classpath.1=bin/
+versant.workbench.classpath.2=../../eclipse_3.5/eclipse/plugins/com.versant.jdo.common_800.2.16.1351/lib/vodjdo.jar
+versant.workbench.classpath.3=../../eclipse_3.5/eclipse/plugins/com.versant.jdo.common_800.2.16.1351/lib/jta-1.1.jar
+versant.workbench.classpath.4=../../eclipse_3.5/eclipse/plugins/com.versant.jdo.common_800.2.16.1351/lib/antlr-2.7.7.jar
+versant.workbench.classpath.5=../../eclipse_3.5/eclipse/plugins/com.versant.jdo.common_800.2.16.1351/lib/antlr-3.1.1-runtime.jar
+versant.workbench.classpath.6=../../eclipse_3.5/eclipse/plugins/com.versant.jdo.common_800.2.16.1351/lib/asm-all-3.3.1.jar
+versant.workbench.classpath.7=../../eclipse_3.5/eclipse/plugins/com.versant.jdo.common_800.2.16.1351/lib/bcel.jar
+versant.workbench.classpath.8=../../eclipse_3.5/eclipse/plugins/com.versant.jdo.common_800.2.16.1351/lib/jdo2-api-2.1.jar
+versant.workbench.classpath.9=../../eclipse_3.5/eclipse/plugins/com.versant.jdo.common_800.2.16.1351/lib/pizza.jar
+versant.workbench.antDisabled=true
